@@ -1,30 +1,37 @@
-<!DOCTYPE html><html lang="en"><head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="/style-ec6ec3ecad4a4b65.css" integrity="sha384-R_rjHquPlaQC2YieYVDgY5VSr_XGr2T_8vUNjFZhLrLIZxD6rmNv38ZnSr9xzDmj">
-        <link rel="icon" href="/icon-4a5d8111340ac869.png" integrity="sha384-vC1_78YFiXl5oM9EPSLY8GWRNJDFFeu1-b3KI3W8V6-GqRk2oVoEiDp0q07sz-aU">
+        <link rel="stylesheet" href="/style-e3d836251539c65f.css" integrity="sha384-OHvCHQAckQHDYBmtYKQRKkKO2BJFl2JREeKXRVaizdj5bB19C519LCVCL+K6iqXo"/>
+        <link rel="icon" href="/icon-4a5d8111340ac869.png" integrity="sha384-vC1/78YFiXl5oM9EPSLY8GWRNJDFFeu1+b3KI3W8V6+GqRk2oVoEiDp0q07sz+aU"/>
         
 
         <title>Kira Hudson</title>
 
-        <script src="https://kit.fontawesome.com/e274c53c44.js" crossorigin="anonymous"></script>
-    
-<link rel="preload" href="/kira_me_website-ce576e577b5d0186_bg.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" integrity="sha384-eCrDNJGiTZc9WrDR18TMUwhcQdOy4nm9tB3hLyKzbKkCrZ_LCdbk2z8BPhluPvDc">
-<link rel="modulepreload" href="/kira_me_website-ce576e577b5d0186.js" crossorigin="anonymous" integrity="sha384-8mrhgEoA0YnlLZo6IzN7q2kAERIol8PhOiQJYVAeJFU-wPAotl1XTCLRZ2kumZ1M"></head>
+        <script
+            src="https://kit.fontawesome.com/e274c53c44.js"
+            crossorigin="anonymous"
+        ></script>
+    <link rel="modulepreload" href="/kira_me_website-b5482bacc8b8764d.js" crossorigin="anonymous" integrity="sha384-I2+f5N/iNI6ZXx9PLGAdPK1xz/HfPQV6YUHg6MloLnkiNB3yoldfOzrl+9eOOUom"><link rel="preload" href="/kira_me_website-b5482bacc8b8764d_bg.wasm" crossorigin="anonymous" integrity="sha384-JCwKyHvGVxLdixLc6GaJqpYcZnssAHxnwmeweoC+fsv9jxVnQbewpmc5hNQk8kvh" as="fetch" type="application/wasm"></head>
     <body>
-
-
 <script type="module">
-import init, * as bindings from '/kira_me_website-ce576e577b5d0186.js';
-init('/kira_me_website-ce576e577b5d0186_bg.wasm');
+import init, * as bindings from '/kira_me_website-b5482bacc8b8764d.js';
+const wasm = await init('/kira_me_website-b5482bacc8b8764d_bg.wasm');
+
+
 window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script><script>"use strict";
 
 (function () {
 
     const address = '{{__TRUNK_ADDRESS__}}';
+    const base = '{{__TRUNK_WS_BASE__}}';
     let protocol = '';
     protocol =
         protocol
@@ -32,7 +39,7 @@ window.wasmBindings = bindings;
             : window.location.protocol === 'https:'
                 ? 'wss'
                 : 'ws';
-    const url = protocol + '://' + address + '/_trunk/ws';
+    const url = protocol + '://' + address + base + '.well-known/trunk/ws';
 
     class Overlay {
         constructor() {
@@ -111,7 +118,7 @@ window.wasmBindings = bindings;
                         break;
                 }
             };
-            ws.onclose = this.onclose;
+            ws.onclose = () => this.onclose();
         }
 
         onclose() {
@@ -123,7 +130,7 @@ window.wasmBindings = bindings;
                     // rebuilt on restart)
                     const ws = new WebSocket(this.url);
                     ws.onopen = () => window.location.reload();
-                    ws.onclose = this.onclose;
+                    ws.onclose = () => this.onclose();
                 },
                 this.poll_interval);
         }
@@ -148,4 +155,5 @@ window.wasmBindings = bindings;
     new Client(url).start();
 
 })()
-</script></body></html>
+</script></body>
+</html>

@@ -1,5 +1,41 @@
 @import url("https://fonts.googleapis.com/css?family=Convergence");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=JetBrains+Mono");
+
+:root {
+    --trans-blue: #5bcefa;
+    --trans-pink: #f5a9b8;
+    --trans-white: #ffffff;
+    --trans-pink: #f5a9b8;
+    --trans-blue: #5bcefa;
+    --bi-pink: #d60270;
+    --bi-purple: #9b4f96;
+    --bi-blue: #0038a8;
+    --pan-magenta: #ee00dd;
+    --pan-yellow: #eedd00;
+    --pan-cyan: #00eedd;
+
+    --transgender-gradient: linear-gradient(
+        to bottom,
+        var(--trans-blue),
+        var(--trans-pink),
+        var(--trans-white),
+        var(--trans-pink),
+        var(--trans-blue)
+    );
+    --bisexual-gradient: linear-gradient(
+        to bottom,
+        var(--bi-pink),
+        var(--bi-purple),
+        var(--bi-blue)
+    );
+    --pansexual-gradient: linear-gradient(
+        to bottom,
+        var(--pan-magenta),
+        var(--pan-yellow),
+        var(--pan-cyan)
+    );
+}
 
 body {
     font-family: Convergence, "Open Sans", "Segoe UI", sans-serif;
@@ -8,7 +44,12 @@ body {
 }
 
 hr {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0)
+    );
     height: 2px;
     border: 0;
     margin: 50px;
@@ -78,6 +119,11 @@ hr {
     margin-left: 205px;
     padding: 25px 15vw;
     /* overflow: auto; */
+}
+
+.code {
+    font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", Consolas,
+        monospace;
 }
 
 .contact-details {

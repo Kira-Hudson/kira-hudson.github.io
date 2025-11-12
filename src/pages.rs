@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::content::{
     AchievementListProperties, ArticleListProperties, CreationListProperties, SkillListProperties,
     ToHtml,
@@ -12,24 +14,42 @@ pub enum Route {
     #[at("/skills")]
     Skills,
     #[at("/skills/:skill")]
-    Skill { skill: String },
+    SkillSpecific { skill: String },
     #[at("/achievements")]
     Achievements,
     #[at("/achievements/:achievement")]
-    Achievement { achievement: String },
+    AchievementSpecific { achievement: String },
     #[at("/creations")]
     Creations,
     #[at("/creations/:creation")]
-    Creation { creation: String },
+    CreationSpecific { creation: String },
     #[at("/articles")]
     Articles,
     #[at("/articles/:article")]
-    Article { article: String },
+    ArticleSpecific { article: String },
     #[at("/contact")]
     Contact,
     #[not_found]
     #[at("/404")]
     NotFound,
+}
+
+impl Display for Route {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Home => write!(f, "/"),
+            Self::Skills => write!(f, "/skills"),
+            Self::SkillSpecific { skill } => write!(f, "/skills/{}", skill),
+            Self::Achievements => write!(f, "/achievements"),
+            Self::AchievementSpecific { achievement } => write!(f, "/achievements/{}", achievement),
+            Self::Creations => write!(f, "/creations"),
+            Self::CreationSpecific { creation } => write!(f, "/creations/{}", creation),
+            Self::Articles => write!(f, "/articles"),
+            Self::ArticleSpecific { article } => write!(f, "/articles/{}", article),
+            Self::Contact => write!(f, "/contact"),
+            Self::NotFound => write!(f, "/404"),
+        }
+    }
 }
 
 #[function_component(Home)]
@@ -38,15 +58,13 @@ pub fn home() -> Html {
         <div>
             <h1>{"Home"}</h1>
 
-            <p>{
-                "Hi, I'm Kira H, and I somehow exist, unfortunately for you."
-            }</p>
+            <p>{"Hi, I'm Kira Hudson, and I somehow exist, unfortunately for you."}</p>
 
             <hr />
 
             <p>
                 {"I was born in the small town of Wincanton in rural England. "}
-                {"It was a Wednesday, Wednesday the 14th of September, in 2005. "}
+                {"It was a Wednesday, the 14th of September, in 2005. "}
             </p>
         </div>
     }
@@ -58,7 +76,7 @@ pub fn skills(SkillListProperties { skills }: &SkillListProperties) -> Html {
         <div>
             <h1>{"Skills"}</h1>
 
-            <p>{"These are my skills."}</p>
+            <p>{"These are (some of) my skills."}</p>
 
             <hr />
 
@@ -75,7 +93,7 @@ pub fn achievements(
         <div>
             <h1>{"Achievements"}</h1>
 
-            <p>{"These are my achievements."}</p>
+            <p>{"These are (some of) my achievements."}</p>
 
             <hr />
 
@@ -90,7 +108,7 @@ pub fn creations(CreationListProperties { creations }: &CreationListProperties) 
         <div>
             <h1>{"Creations"}</h1>
 
-            <p>{"These are my creations."}</p>
+            <p>{"These are (some of) my creations."}</p>
 
             <hr />
 
@@ -105,7 +123,7 @@ pub fn articles(ArticleListProperties { articles }: &ArticleListProperties) -> H
         <div>
             <h1>{"Articles"}</h1>
 
-            <p>{"These are my articles."}</p>
+            <p>{"I am working on implementing parsing markdown files for articles."}</p>
 
             <hr />
 
@@ -120,9 +138,7 @@ pub fn contact() -> Html {
         <div>
             <h1>{"Contact"}</h1>
 
-            <p>{
-                "If you have any questions, feel free to contact me."
-            }</p>
+            <p>{"If you have any questions, feel free to contact me."}</p>
 
             <div class={"contact-details-container"}>
                 <a

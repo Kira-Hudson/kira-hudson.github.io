@@ -1,4 +1,11 @@
 use std::rc::Rc;
+use tracing_subscriber::{
+    fmt::{
+        format::{FmtSpan, Pretty},
+        time::UtcTime,
+    },
+    prelude::*,
+};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -15,6 +22,20 @@ use typing::*;
 
 #[function_component(App)]
 fn app() -> Html {
+    let fmt_layer = tracing_subscriber::fmt::layer()
+        .with_ansi(false)
+        .with_timer(UtcTime::rfc_3339())
+        .with_writer(tracing_web::MakeConsoleWriter)
+        .with_span_events(FmtSpan::ACTIVE);
+    let perf_layer = tracing_web::performance_layer().with_details_from_fields(Pretty::default());
+
+    tracing_subscriber::registry()
+        .with(fmt_layer)
+        .with(perf_layer)
+        .init();
+
+    // ****************************** //
+
     let areas: AreaList = AreaList::from(vec![
         Area("development"),
         Area("development/backend"),
@@ -132,12 +153,14 @@ fn app() -> Html {
         },
     }]);
 
+    // ****************************** //
+
     html! {
         <div>
-            <header  id={"header"}>
+            <div  id={"header"}>
                 <h1>{ "Hello, world!" }</h1>
-                <img src={"icon.png"} alt={"Website Icon"} />
-            </header>
+                <img src={"/icon.png"} alt={"Website Icon"} />
+            </div>
             <ul id={"nav"}>
                 <li>
                     <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
@@ -158,29 +181,30 @@ fn app() -> Html {
                     <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
                 </li>
             </ul>
-            <main id={"main"}>
+            <div id={"main"}>
                 <BrowserRouter>
                     <Switch<Route>
                         render={move |route: Route| {
+                            tracing::debug!("{route}");
                             match route {
                                 Route::Home => html! { <Home /> },
                                 Route::Skills => html! { <Skills skills={skills.clone()} /> },
-                                Route::Skill { skill } => html! {
+                                Route::SkillSpecific { skill } => html! {
                                     <ContentComponent
                                         content={skills.get(&skill).map_or_else(|| Content::NotFound, Content::Skill)} />
                                 },
                                 Route::Achievements => html! { <Achievements achievements={achievements.clone()} /> },
-                                Route::Achievement { achievement } => html! {
+                                Route::AchievementSpecific { achievement } => html! {
                                     <ContentComponent
                                         content={achievements.get(&achievement).map_or_else(|| Content::NotFound, Content::Achievement)} />
                                 },
                                 Route::Creations => html! { <Creations creations={creations.clone()} /> },
-                                Route::Creation { creation } => html! {
+                                Route::CreationSpecific { creation } => html! {
                                     <ContentComponent
                                         content={creations.get(&creation).map_or_else(|| Content::NotFound, Content::Creation)} />
                                 },
                                 Route::Articles => html! { <Articles articles={articles.clone()} /> },
-                                Route::Article { article } => html! {
+                                Route::ArticleSpecific { article } => html! {
                                     <ContentComponent
                                         content={articles.get(&article).map_or_else(|| Content::NotFound, Content::Article)} />
                                 },
@@ -190,7 +214,7 @@ fn app() -> Html {
                         }}
                     />
                 </BrowserRouter>
-            </main>
+            </div>
         </div>
     }
 }
