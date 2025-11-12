@@ -163,12 +163,26 @@ fn app() -> Html {
             </div>
             <div id={"nav"}>
                 <BrowserRouter>
-                    <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
-                    <Link<Route> to={Route::Skills}>{ "Skills" }</Link<Route>>
-                    <Link<Route> to={Route::Achievements}>{ "Achievements" }</Link<Route>>
-                    <Link<Route> to={Route::Creations}>{ "Creations" }</Link<Route>>
-                    <Link<Route> to={Route::Articles}>{ "Articles" }</Link<Route>>
-                    <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
+                    <ul>
+                        <li>
+                            <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
+                        </li>
+                        <li>
+                            <Link<Route> to={Route::Skills}>{ "Skills" }</Link<Route>>
+                        </li>
+                        <li>
+                            <Link<Route> to={Route::Achievements}>{ "Achievements" }</Link<Route>>
+                        </li>
+                        <li>
+                            <Link<Route> to={Route::Creations}>{ "Creations" }</Link<Route>>
+                        </li>
+                        <li>
+                            <Link<Route> to={Route::Articles}>{ "Articles" }</Link<Route>>
+                        </li>
+                        <li>
+                            <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
+                        </li>
+                    </ul>
                 </BrowserRouter>
             </div>
             <div id={"main"}>
