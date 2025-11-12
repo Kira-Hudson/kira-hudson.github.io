@@ -1,11 +1,11 @@
 use std::rc::Rc;
-use tracing_subscriber::{
-    fmt::{
-        format::{FmtSpan, Pretty},
-        time::UtcTime,
-    },
-    prelude::*,
-};
+//// use tracing_subscriber::{
+////     fmt::{
+////         format::{FmtSpan, Pretty},
+////         time::UtcTime,
+////     },
+////     prelude::*,
+//// };
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -22,39 +22,39 @@ use typing::*;
 
 #[function_component(App)]
 fn app() -> Html {
-    let fmt_layer = tracing_subscriber::fmt::layer()
-        .with_ansi(false)
-        .with_timer(UtcTime::rfc_3339())
-        .with_writer(tracing_web::MakeConsoleWriter)
-        .with_span_events(FmtSpan::ACTIVE);
-    let perf_layer = tracing_web::performance_layer().with_details_from_fields(Pretty::default());
-
-    tracing_subscriber::registry()
-        .with(fmt_layer)
-        .with(perf_layer)
-        .init();
+    //// let fmt_layer = tracing_subscriber::fmt::layer()
+    //// .with_ansi(false)
+    //// .with_timer(UtcTime::rfc_3339())
+    //// .with_writer(tracing_web::MakeConsoleWriter)
+    //// .with_span_events(FmtSpan::ACTIVE);
+    //// let perf_layer = tracing_web::performance_layer().with_details_from_fields(Pretty::default());
+    ////
+    //// tracing_subscriber::registry()
+    //// .with(fmt_layer)
+    //// .with(perf_layer)
+    //// .init();
 
     // ****************************** //
 
     let areas: AreaList = AreaList::from(vec![
-        Area("development"),
-        Area("development/backend"),
-        Area("development/database"),
-        Area("development/frontend"),
-        Area("development/game"),
-        Area("development/systems"),
-        Area("development/web"),
-        Area("graphics/digital"),
-        Area("language"),
-        Area("scripting"),
+        Area::from("development"),
+        Area::from("development/backend"),
+        Area::from("development/database"),
+        Area::from("development/frontend"),
+        Area::from("development/game"),
+        Area::from("development/systems"),
+        Area::from("development/web"),
+        Area::from("graphics/digital"),
+        Area::from("language"),
+        Area::from("scripting"),
     ]);
     let tools: ToolList = ToolList::from(vec![
-        Tool("Blender"),
-        Tool("Illustrator"),
-        Tool("Photoshop"),
-        Tool("Unity"),
-        Tool("Visual Studio"),
-        Tool("Visual Studio Code"),
+        Tool::from("Blender"),
+        Tool::from("Illustrator"),
+        Tool::from("Photoshop"),
+        Tool::from("Unity"),
+        Tool::from("Visual Studio"),
+        Tool::from("Visual Studio Code"),
     ]);
 
     let skills: SkillList = SkillList::new(vec![
@@ -161,31 +161,21 @@ fn app() -> Html {
                 <h1>{ "Hello, world!" }</h1>
                 <img src={"/icon.png"} alt={"Website Icon"} />
             </div>
-            <ul id={"nav"}>
-                <li>
+            <div id={"nav"}>
+                <BrowserRouter>
                     <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
-                </li>
-                <li>
                     <Link<Route> to={Route::Skills}>{ "Skills" }</Link<Route>>
-                </li>
-                <li>
                     <Link<Route> to={Route::Achievements}>{ "Achievements" }</Link<Route>>
-                </li>
-                <li>
                     <Link<Route> to={Route::Creations}>{ "Creations" }</Link<Route>>
-                </li>
-                <li>
                     <Link<Route> to={Route::Articles}>{ "Articles" }</Link<Route>>
-                </li>
-                <li>
                     <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
-                </li>
-            </ul>
+                </BrowserRouter>
+            </div>
             <div id={"main"}>
                 <BrowserRouter>
                     <Switch<Route>
                         render={move |route: Route| {
-                            tracing::debug!("{route}");
+                            tracing::debug!("{}", route.clone());
                             match route {
                                 Route::Home => html! { <Home /> },
                                 Route::Skills => html! { <Skills skills={skills.clone()} /> },

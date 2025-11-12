@@ -53,8 +53,14 @@ pub trait Get<K, V> {
 // ********************************** //
 
 /// An area, like an "area of interest". Similar to a [`Topic`].
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub struct Area(pub &'static str);
+#[derive(Clone, PartialEq, Eq)]
+pub struct Area(pub String);
+
+impl From<&str> for Area {
+    fn from(value: &str) -> Self {
+        Self(value.to_string())
+    }
+}
 
 impl Display for Area {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -64,7 +70,7 @@ impl Display for Area {
 
 impl NotFoundValue for Area {
     fn not_found() -> Self {
-        Self("<ERR: Area not found>")
+        Self::from("<ERR: Area not found>")
     }
 }
 
@@ -89,7 +95,7 @@ impl Get<&str, Area> for AreaList {
     ///
     /// Returns an `Option<&Area>`
     fn get(&self, string: &str) -> Option<Area> {
-        self.iter().find(|area| area.to_string() == string).copied()
+        self.iter().find(|area| area.to_string() == string).cloned()
     }
 
     /// Finds the first area in the list with the given name (`string`), or
@@ -115,8 +121,14 @@ impl From<Vec<Area>> for AreaList {
 
 /// A tool, like an application or other software, or even a physical tool,
 /// used in the completion of a task.
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub struct Tool(pub &'static str);
+#[derive(Clone, PartialEq, Eq)]
+pub struct Tool(pub String);
+
+impl From<&str> for Tool {
+    fn from(value: &str) -> Self {
+        Self(value.to_string())
+    }
+}
 
 impl Display for Tool {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -126,7 +138,7 @@ impl Display for Tool {
 
 impl NotFoundValue for Tool {
     fn not_found() -> Self {
-        Self("<ERR: Tool not found>")
+        Self::from("<ERR: Tool not found>")
     }
 }
 
@@ -151,7 +163,7 @@ impl Get<&str, Tool> for ToolList {
     ///
     /// Returns an `Option<Tool>`
     fn get(&self, string: &str) -> Option<Tool> {
-        self.iter().find(|tool| tool.to_string() == string).copied()
+        self.iter().find(|tool| tool.to_string() == string).cloned()
     }
 
     /// Finds the first tool in the list with the given name (`string`), or
@@ -319,6 +331,7 @@ impl NotFoundValue for Skill {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Properties, PartialEq, Eq)]
 pub struct SkillProperties {
     pub skill: Skill,
@@ -405,6 +418,7 @@ impl ToHtml for Achievement {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Properties, PartialEq, Eq)]
 pub struct AchievementProperties {
     pub achievement: Achievement,
@@ -494,6 +508,7 @@ impl ToHtml for Creation {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Properties, PartialEq, Eq)]
 pub struct CreationProperties {
     pub creation: Creation,
@@ -573,6 +588,7 @@ impl ToHtml for Article {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Properties, PartialEq)]
 pub struct ArticleProperties {
     pub article: Article,

@@ -7,7 +7,7 @@ use crate::content::{
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-#[derive(Clone, Routable, PartialEq, Eq)]
+#[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
     Home,
@@ -59,13 +59,6 @@ pub fn home() -> Html {
             <h1>{"Home"}</h1>
 
             <p>{"Hi, I'm Kira Hudson, and I somehow exist, unfortunately for you."}</p>
-
-            <hr />
-
-            <p>
-                {"I was born in the small town of Wincanton in rural England. "}
-                {"It was a Wednesday, the 14th of September, in 2005. "}
-            </p>
         </div>
     }
 }
@@ -138,8 +131,6 @@ pub fn contact() -> Html {
         <div>
             <h1>{"Contact"}</h1>
 
-            <p>{"If you have any questions, feel free to contact me."}</p>
-
             <div class={"contact-details-container"}>
                 <a
                     class={"contact-icon"}
@@ -153,52 +144,12 @@ pub fn contact() -> Html {
 
                 <a
                     class={"contact-icon"}
-                    href={"https://github.com/QueenKiraThePansexualPixie/"}
+                    href={"https://github.com/Kira-Hudson/"}
                     id={"GitHub"}
-                    title={"@QueenKiraThePansexualPixie"}
+                    title={"@Kira-Hudson"}
                     target={"_blank"}
                 >
                     <i class={"fa-brands fa-square-github"}></i>
-                </a>
-
-                <a
-                    class={"contact-icon"}
-                    href={"https://www.tumblr.com/blog/kira-is-pan/"}
-                    id={"Tumblr"}
-                    title={"@kira-is-pan"}
-                    target={"_blank"}
-                >
-                    <i class={"fa-brands fa-square-tumblr"}></i>
-                </a>
-
-                <a
-                    class={"contact-icon"}
-                    href={"https://www.instagram.com/kirathepanpixie/"}
-                    id={"Instagram"}
-                    title={"@kirathepanpixie"}
-                    target={"_blank"}
-                >
-                    <i class={"fa-brands fa-square-instagram"}></i>
-                </a>
-
-                <a
-                    class={"contact-icon"}
-                    href={"https://www.pinterest.co.uk/kirathepansexualpixie/"}
-                    id={"Pinterest"}
-                    title={"@kirathepansexualpixie"}
-                    target={"_blank"}
-                >
-                    <i class={"fa-brands fa-square-pinterest"}></i>
-                </a>
-
-                <a
-                    class={"contact-icon"}
-                    href={"https://www.reddit.com/user/KiraThePanPixie/"}
-                    id={"Reddit"}
-                    title={"@KiraThePanPixie"}
-                    target={"_blank"}
-                >
-                    <i class={"fa-brands fa-square-reddit"}></i>
                 </a>
             </div>
         </div>
