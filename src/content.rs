@@ -6,9 +6,9 @@ use yew::prelude::*;
 // ************************************************************************** //
 
 /// Trait for turning a type into an [`Html`] representation.
-pub trait ToHtml {
+pub trait ToListItem {
     /// Returns an [`Html`] representation of the caller.
-    fn to_html(&self) -> Html;
+    fn to_list_item(&self) -> Html;
 }
 
 /// Trait for enforcing types have a "not found" value.
@@ -263,7 +263,6 @@ impl From<usize> for Competency {
 #[derive(Clone, PartialEq)]
 pub enum Content {
     Skill(Skill),
-    Achievement(Achievement),
     Creation(Creation),
     Article(Article),
     NotFound,
@@ -284,10 +283,9 @@ pub struct ContentProperties {
 #[function_component(ContentComponent)]
 pub fn content_component(ContentProperties { content }: &ContentProperties) -> Html {
     match content {
-        Content::Skill(skill) => skill.to_html(),
-        Content::Achievement(achievement) => achievement.to_html(),
-        Content::Creation(creation) => creation.to_html(),
-        Content::Article(article) => article.to_html(),
+        Content::Skill(skill) => skill.to_list_item(),
+        Content::Creation(creation) => creation.to_list_item(),
+        Content::Article(article) => article.to_list_item(),
         Content::NotFound => html! { <NotFound /> },
     }
 }
@@ -304,16 +302,11 @@ pub struct Skill {
     pub description: String,
 }
 
-impl ToHtml for Skill {
-    fn to_html(&self) -> Html {
+impl ToListItem for Skill {
+    fn to_list_item(&self) -> Html {
         html! {
             <div key={self.id} class={"card"}>
-                <h3 class={"card-title"}>{self.name.clone()}</h3>
-                <p class={"card-detail"}>
-                    {self.areas.iter().map(|area| html!{<span>{area.to_string() + ". "}</span>}).collect::<Html>()}
-                </p>
-                <p class={"card-detail"}>{format!("Competency: {}", self.competency)}</p>
-                <p class={"card-text"}>{self.description.clone()}</p>
+                <h3 class={"card-title"}>{self.name.clone()} {format!(" · {}", self.competency)}</h3>
             </div>
         }
     }
@@ -362,11 +355,11 @@ impl Get<&str, Skill> for SkillList {
     }
 }
 
-impl ToHtml for SkillList {
-    fn to_html(&self) -> Html {
+impl ToListItem for SkillList {
+    fn to_list_item(&self) -> Html {
         html! {
             <div class={"content-list"}>
-                {self.skills.iter().map(ToHtml::to_html).collect::<Html>()}
+                {self.skills.iter().map(ToListItem::to_list_item).collect::<Html>()}
             </div>
         }
     }
@@ -375,96 +368,6 @@ impl ToHtml for SkillList {
 #[derive(Properties, PartialEq, Eq)]
 pub struct SkillListProperties {
     pub skills: SkillList,
-}
-
-// ********** Achievements ********** //
-// ********************************** //
-
-#[derive(Clone, PartialEq, Eq)]
-pub struct Achievement {
-    pub id: usize,
-    pub name: String,
-    pub completed: KiraDate,
-    pub areas: Vec<Rc<Area>>,
-    pub tools: Vec<Rc<Tool>>,
-    pub skills: Vec<Rc<Skill>>,
-    pub description: String,
-}
-
-impl ToHtml for Achievement {
-    fn to_html(&self) -> Html {
-        html! {
-            <div key={self.id} class={"card"}>
-                <h3 class={"card-title"}>{self.name.clone()}</h3>
-                <p class={"card-detail"}>{
-                    self.areas.iter().map(|area| html!{
-                        <span>{area.to_string() + ". "}</span>
-                    }).collect::<Html>()
-                }</p>
-                <p class={"card-detail"}>{self.completed.to_string()}</p>
-                <p class={"card-text"}>{self.description.clone()}</p>
-                <p class={"card-detail"}>{
-                    self.tools.iter().map(|tool| html!{
-                        <span>{tool.to_string() + ". "}</span>
-                    }).collect::<Html>()
-                }</p>
-                <p class={"card-detail"}>{
-                    self.skills.iter().map(|skill| html!{
-                        <span>{skill.name.clone() + ". "}</span>
-                    }).collect::<Html>()
-                }</p>
-            </div>
-        }
-    }
-}
-
-#[allow(dead_code)]
-#[derive(Properties, PartialEq, Eq)]
-pub struct AchievementProperties {
-    pub achievement: Achievement,
-}
-
-#[derive(Clone, PartialEq, Eq)]
-pub struct AchievementList {
-    achievements: Vec<Achievement>,
-}
-
-impl AchievementList {
-    pub fn new(achievements: Vec<Achievement>) -> Self {
-        Self { achievements }
-    }
-}
-
-impl Index<usize> for AchievementList {
-    type Output = Achievement;
-
-    fn index(&self, index: usize) -> &Self::Output {
-        &self.achievements[index]
-    }
-}
-
-impl Get<&str, Achievement> for AchievementList {
-    fn get(&self, name: &str) -> Option<Achievement> {
-        self.achievements
-            .iter()
-            .find(|achievement| achievement.name == name)
-            .cloned()
-    }
-}
-
-impl ToHtml for AchievementList {
-    fn to_html(&self) -> Html {
-        html! {
-            <div class={"content-list"}>
-                {self.achievements.iter().map(ToHtml::to_html).collect::<Html>()}
-            </div>
-        }
-    }
-}
-
-#[derive(Properties, PartialEq, Eq)]
-pub struct AchievementListProperties {
-    pub achievements: AchievementList,
 }
 
 // *********** Creations  *********** //
@@ -481,27 +384,15 @@ pub struct Creation {
     pub description: String,
 }
 
-impl ToHtml for Creation {
-    fn to_html(&self) -> Html {
+impl ToListItem for Creation {
+    fn to_list_item(&self) -> Html {
         html! {
             <div key={self.id} class={"card"}>
-                <h3 class={"card-title"}>{self.name.clone()}</h3>
-                <p class={"card-detail"}>{
-                    self.areas.iter().map(|area| html!{
-                        <span>{area.to_string() + ". "}</span>
-                    }).collect::<Html>()
-                }</p>
+                <h2 class={"card-title"}>{self.name.clone()}</h2>
                 <p class={"card-detail"}>{self.completed.to_string()}</p>
                 <p class={"card-text"}>{self.description.clone()}</p>
                 <p class={"card-detail"}>{
-                    self.tools.iter().map(|tool| html!{
-                        <span>{tool.to_string() + "."}</span>
-                    }).collect::<Html>()
-                }</p>
-                <p class={"card-detail"}>{
-                    self.skills.iter().map(|skill| html!{
-                        <span>{skill.name.clone() + ". "}</span>
-                    }).collect::<Html>()
+                    self.tools.iter().map(|tool| tool.to_string()).collect::<Vec<String>>().join(", ")
                 }</p>
             </div>
         }
@@ -542,11 +433,11 @@ impl Get<&str, Creation> for CreationList {
     }
 }
 
-impl ToHtml for CreationList {
-    fn to_html(&self) -> Html {
+impl ToListItem for CreationList {
+    fn to_list_item(&self) -> Html {
         html! {
             <div class={"content-list"}>
-                {self.creations.iter().map(ToHtml::to_html).collect::<Html>()}
+                {self.creations.iter().map(ToListItem::to_list_item).collect::<Html>()}
             </div>
         }
     }
@@ -570,19 +461,13 @@ pub struct Article {
     pub content: Html,
 }
 
-impl ToHtml for Article {
-    fn to_html(&self) -> Html {
+impl ToListItem for Article {
+    fn to_list_item(&self) -> Html {
         html! {
             <article key={self.id} class={"card"}>
-                <h3 class={"card-title"}>{self.title.clone()}</h3>
+                <h2 class={"card-title"}>{self.title.clone()}</h2>
                 <p class={"card-detail"}>{self.published.to_string()}</p>
-                <p class={"card-detail"}>{
-                    self.topics.iter().map(|topic| html!{
-                        <span>{topic.to_string() + ". "}</span>
-                    }).collect::<Html>()
-                }</p>
                 <p class={"card-text"}>{self.summary.clone()}</p>
-                <div class={"card-content"}>{self.content.clone()}</div>
             </article>
         }
     }
@@ -622,11 +507,11 @@ impl Get<&str, Article> for ArticleList {
     }
 }
 
-impl ToHtml for ArticleList {
-    fn to_html(&self) -> Html {
+impl ToListItem for ArticleList {
+    fn to_list_item(&self) -> Html {
         html! {
             <div class={"content-list"}>
-                {self.articles.iter().map(ToHtml::to_html).collect::<Html>()}
+                {self.articles.iter().map(ToListItem::to_list_item).collect::<Html>()}
             </div>
         }
     }

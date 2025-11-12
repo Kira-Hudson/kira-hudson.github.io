@@ -1,8 +1,8 @@
 use std::fmt::Display;
 
 use crate::content::{
-    AchievementListProperties, ArticleListProperties, CreationListProperties, SkillListProperties,
-    ToHtml,
+    ArticleListProperties, CreationListProperties, SkillListProperties,
+    ToListItem,
 };
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -15,10 +15,6 @@ pub enum Route {
     Skills,
     #[at("/skills/:skill")]
     SkillSpecific { skill: String },
-    #[at("/achievements")]
-    Achievements,
-    #[at("/achievements/:achievement")]
-    AchievementSpecific { achievement: String },
     #[at("/creations")]
     Creations,
     #[at("/creations/:creation")]
@@ -40,8 +36,6 @@ impl Display for Route {
             Self::Home => write!(f, "/"),
             Self::Skills => write!(f, "/skills"),
             Self::SkillSpecific { skill } => write!(f, "/skills/{}", skill),
-            Self::Achievements => write!(f, "/achievements"),
-            Self::AchievementSpecific { achievement } => write!(f, "/achievements/{}", achievement),
             Self::Creations => write!(f, "/creations"),
             Self::CreationSpecific { creation } => write!(f, "/creations/{}", creation),
             Self::Articles => write!(f, "/articles"),
@@ -58,7 +52,7 @@ pub fn home() -> Html {
         <div>
             <h1>{"Home"}</h1>
 
-            <p>{"Hi, I'm Kira Hudson, and I somehow exist, unfortunately for you."}</p>
+            <p>{"Hi, I'm Kira Hudson, and I somehow exist, unfortunately for you. I am a trans woman, currently studying Computer Games Design at the University of South Wales."}</p>
         </div>
     }
 }
@@ -69,28 +63,11 @@ pub fn skills(SkillListProperties { skills }: &SkillListProperties) -> Html {
         <div>
             <h1>{"Skills"}</h1>
 
-            <p>{"These are (some of) my skills."}</p>
+            <p>{"These are some of the skills I have accrued over my few decades of life."}</p>
 
             <hr />
 
-            <div>{skills.to_html()}</div>
-        </div>
-    }
-}
-
-#[function_component(Achievements)]
-pub fn achievements(
-    AchievementListProperties { achievements }: &AchievementListProperties,
-) -> Html {
-    html! {
-        <div>
-            <h1>{"Achievements"}</h1>
-
-            <p>{"These are (some of) my achievements."}</p>
-
-            <hr />
-
-            <div>{achievements.to_html()}</div>
+            <div>{skills.to_list_item()}</div>
         </div>
     }
 }
@@ -101,11 +78,11 @@ pub fn creations(CreationListProperties { creations }: &CreationListProperties) 
         <div>
             <h1>{"Creations"}</h1>
 
-            <p>{"These are (some of) my creations."}</p>
+            <p>{"These are some of my creations that I'd like to share with the world."}</p>
 
             <hr />
 
-            <div>{creations.to_html()}</div>
+            <div>{creations.to_list_item()}</div>
         </div>
     }
 }
@@ -116,11 +93,11 @@ pub fn articles(ArticleListProperties { articles }: &ArticleListProperties) -> H
         <div>
             <h1>{"Articles"}</h1>
 
-            <p>{"I am working on implementing parsing markdown files for articles."}</p>
+            <p>{"I am working on implementing parsing markdown files for articles. Oh, and also what to write. More is yet to come..."}</p>
 
             <hr />
 
-            <div>{articles.to_html()}</div>
+            <div>{articles.to_list_item()}</div>
         </div>
     }
 }

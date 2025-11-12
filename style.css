@@ -3,179 +3,188 @@
 @import url("https://fonts.googleapis.com/css?family=JetBrains+Mono");
 
 :root {
-    --trans-blue: #5bcefa;
-    --trans-pink: #f5a9b8;
-    --trans-white: #ffffff;
-    --trans-pink: #f5a9b8;
-    --trans-blue: #5bcefa;
-    --bi-pink: #d60270;
-    --bi-purple: #9b4f96;
-    --bi-blue: #0038a8;
-    --pan-magenta: #ee00dd;
-    --pan-yellow: #eedd00;
-    --pan-cyan: #00eedd;
+  --trans-blue: #5bcefa;
+  --trans-pink: #f5a9b8;
+  --trans-white: #ffffff;
+  --trans-pink: #f5a9b8;
+  --trans-blue: #5bcefa;
+  --bi-pink: #d60270;
+  --bi-purple: #9b4f96;
+  --bi-blue: #0038a8;
+  --pan-magenta: #ee00dd;
+  --pan-yellow: #eedd00;
+  --pan-cyan: #00eedd;
 
-    --transgender-gradient: linear-gradient(
-        to bottom,
-        var(--trans-blue),
-        var(--trans-pink),
-        var(--trans-white),
-        var(--trans-pink),
-        var(--trans-blue)
-    );
-    --bisexual-gradient: linear-gradient(
-        to bottom,
-        var(--bi-pink),
-        var(--bi-purple),
-        var(--bi-blue)
-    );
-    --pansexual-gradient: linear-gradient(
-        to bottom,
-        var(--pan-magenta),
-        var(--pan-yellow),
-        var(--pan-cyan)
-    );
+  --transgender-gradient: linear-gradient(
+    to bottom,
+    var(--trans-blue),
+    var(--trans-pink),
+    var(--trans-white),
+    var(--trans-pink),
+    var(--trans-blue)
+  );
+  --bisexual-gradient: linear-gradient(
+    to bottom,
+    var(--bi-pink),
+    var(--bi-purple),
+    var(--bi-blue)
+  );
+  --pansexual-gradient: linear-gradient(
+    to bottom,
+    var(--pan-magenta),
+    var(--pan-yellow),
+    var(--pan-cyan)
+  );
 }
 
 body {
-    font-family: Convergence, "Open Sans", "Segoe UI", sans-serif;
-    margin: 0;
-    /* overflow: hidden; */
+  font-family: Convergence, "Open Sans", "Segoe UI", sans-serif;
+  margin: 0;
+  /* overflow: hidden; */
 }
 
 hr {
-    background-image: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.75),
-        rgba(0, 0, 0, 0)
-    );
-    height: 2px;
-    border: 0;
-    margin: 50px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+  height: 2px;
+  border: 0;
+  margin: 50px;
+}
+
+#page-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 #header {
-    color: #e0ffe1;
-    background-color: #39363c;
-    padding: 8px 16px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  color: #e0ffe1;
+  background-color: #39363c;
+  padding: 8px 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #header img {
-    --shadow: 0 0 10px 50px #6dfffa;
-    opacity: 0.9;
-    width: 12%;
-    padding: 20px 25px;
-    transform: rotate3d(10deg, 20deg, 30deg);
-    /* text-shadow: var(--shadow); */
-    /* filter: drop-shadow(var(--shadow)); */
+  --shadow: 0 0 10px 50px #6dfffa;
+  opacity: 0.9;
+  width: 12%;
+  padding: 20px 25px;
+  transform: rotate3d(10deg, 20deg, 30deg);
+  /* text-shadow: var(--shadow); */
+  /* filter: drop-shadow(var(--shadow)); */
 }
 
 #header h1 {
-    margin: 2em 1em;
-    float: left;
+  margin: 2em 1em;
+  float: left;
 }
 
 #nav {
-    background-color: #232323;
-    font-family: "Times New Roman", Times, Garamond, "Cormorant Garamond",
-        "Garamond EB", serif !important;
-    list-style-type: none;
-    width: 200px;
-    height: 100%;
-    position: fixed;
-    padding: 15px 5px;
-    margin: 0;
-    overflow: auto;
+  background-color: #232323;
+  font-family: "Times New Roman", Times, Garamond, "Cormorant Garamond",
+    "Garamond EB", serif !important;
+  list-style-type: none;
+  width: 30%;
+  height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 15px 5px;
+  margin: 0;
+  overflow: auto;
 }
 
 #nav li {
-    font-size: 16pt;
-    padding: 0;
-    margin: 0;
+  font-size: 16pt;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
 
 #nav li a {
-    color: #aaaaaa;
-    background-color: #232323;
-    text-decoration: none;
-    text-align: left;
-    display: block;
-    width: 170px;
-    padding: 5px 10px;
-    margin: 0;
+  color: #aaaaaa;
+  background-color: #232323;
+  text-decoration: none;
+  text-align: left;
+  display: block;
+  width: 170px;
+  padding: 5px 10px;
+  margin: 0;
 }
 
 #nav li a:hover,
 #nav li a.active {
-    color: #efefef;
+  color: #efefef;
 }
 
 #main {
-    margin-left: 205px;
-    padding: 25px 15vw;
-    /* overflow: auto; */
+  width: 70%;
+  /* margin-left: 205px; */
+  padding: 25px 15vw;
+  /* overflow: auto; */
 }
 
 .code {
-    font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", Consolas,
-        monospace;
+  font-family: "Fira Code", "JetBrains Mono", "Cascadia Code", Consolas,
+    monospace;
+}
+
+.card-detail {
+  color: #666;
+  font-style: italic;
 }
 
 .contact-details {
-    /* display: inline-grid; */
+  /* display: inline-grid; */
 }
 
 .contact-icon {
-    --animation-timing: 0.2s ease-in-out;
-    color: rgba(0, 0, 0, 1);
-    font-size: 40pt;
-    text-decoration: none;
-    padding: 5px;
-    transition: color var(--animation-timing);
+  --animation-timing: 0.2s ease-in-out;
+  color: rgba(0, 0, 0, 1);
+  font-size: 40pt;
+  text-decoration: none;
+  padding: 5px;
+  transition: color var(--animation-timing);
 }
 
 #Instagram {
-    background-clip: text;
-    background-image: linear-gradient(
-        to bottom right,
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0)
-    );
-    transition: color var(--animation-timing),
-        background-image var(--animation-timing);
+  background-clip: text;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0)
+  );
+  transition: color var(--animation-timing),
+    background-image var(--animation-timing);
 }
 
 .contact-icon:hover {
-    color: #282828;
+  color: #282828;
 }
 
 #GitHub:hover {
-    color: #282828;
+  color: #282828;
 }
 
 #Tumblr:hover {
-    color: #001935;
+  color: #001935;
 }
 
 #Instagram:hover {
-    color: rgba(0, 0, 0, 0);
-    background-image: linear-gradient(
-        to bottom right,
-        #ffbb00,
-        #ff00d0,
-        #8800ff
-    );
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(to bottom right, #ffbb00, #ff00d0, #8800ff);
 }
 
 #Pinterest:hover {
-    color: #e60023;
+  color: #e60023;
 }
 
 #Reddit:hover {
-    color: #ff4500;
+  color: #ff4500;
 }

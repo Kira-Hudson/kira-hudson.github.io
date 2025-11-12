@@ -70,10 +70,10 @@ fn app() -> Html {
                 Rc::new(areas.get_unwrap("scripting")),
             ],
             competency: Competency::Intermediate,
-            description: "A high-level systems programming language, designed for interacting more safely with low-level concepts.".to_string(),
+            description: "Well, this website is made in Rust using the Yew framework and the Trunk application bundler for WebAssembly.".to_string(),
         },
         Skill {
-            id: 1,
+            id: 2,
             name: "Python".to_string(),
             areas: vec![
                 Rc::new(areas.get_unwrap("development/backend")),
@@ -83,10 +83,10 @@ fn app() -> Html {
                 Rc::new(areas.get_unwrap("scripting")),
             ],
             competency: Competency::Intermediate,
-            description: "A high-level, interpreted programming language with a focus on readbility and fast launch-times over fast and powerful programs.".to_string(),
+            description: "I have used Python for a couple small scripts, but not for any full-on programs.".to_string(),
         },
         Skill {
-            id: 2,
+            id: 3,
             name: "C++".to_string(),
             areas: vec![
                 Rc::new(areas.get_unwrap("development/backend")),
@@ -99,30 +99,20 @@ fn app() -> Html {
                 Rc::new(areas.get_unwrap("scripting")),
             ],
             competency: Competency::Novice,
-            description: "A low-level, high-control, systems programming language.".to_string(),
+            description: "I have mostly only done experimenting in C++ and have not created any scripts or programs with it.".to_string(),
         },
         Skill {
-            id: 3,
+            id: 1,
             name: "Web Development".to_string(),
             areas: vec![
                 Rc::new(areas.get_unwrap("development/backend")),
                 Rc::new(areas.get_unwrap("development/frontend")),
                 Rc::new(areas.get_unwrap("development/web")),
             ],
-            competency: Competency::Intermediate,
-            description: "Web development.".to_string(),
+            competency: Competency::Advanced,
+            description: "While I'm not sure I can call myself an expert with just three and a bit years of it under my belt, I am definitely trying more advanced methods of web development.".to_string(),
         },
     ]);
-
-    let achievements: AchievementList = AchievementList::new(vec![Achievement {
-        id: 0,
-        name: "<NAME>".to_string(),
-        completed: KiraDate::new(2023, 5, 24),
-        areas: vec![],
-        tools: vec![],
-        skills: vec![],
-        description: "<DESCRIPTION>".to_string(),
-    }]);
 
     let creations: CreationList = CreationList::new(vec![Creation {
         id: 0,
@@ -137,7 +127,7 @@ fn app() -> Html {
         skills: vec![Rc::new(
             skills.get_unwrap_or("Web Development", Skill::not_found()),
         )],
-        description: "A personal profile website.".to_string(),
+        description: "A personal profile website I made for my level 3 BTEC course at Coleg y Cymoedd.".to_string(),
     }]);
 
     let articles: ArticleList = ArticleList::new(vec![Article {
@@ -156,68 +146,63 @@ fn app() -> Html {
     // ****************************** //
 
     html! {
-        <div>
+        <div id={"root"}>
             <div  id={"header"}>
                 <h1>{ "Hello, world!" }</h1>
                 <img src={"/icon.png"} alt={"Website Icon"} />
             </div>
-            <div id={"nav"}>
-                <BrowserRouter>
-                    <ul>
-                        <li>
-                            <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
-                        </li>
-                        <li>
-                            <Link<Route> to={Route::Skills}>{ "Skills" }</Link<Route>>
-                        </li>
-                        <li>
-                            <Link<Route> to={Route::Achievements}>{ "Achievements" }</Link<Route>>
-                        </li>
-                        <li>
-                            <Link<Route> to={Route::Creations}>{ "Creations" }</Link<Route>>
-                        </li>
-                        <li>
-                            <Link<Route> to={Route::Articles}>{ "Articles" }</Link<Route>>
-                        </li>
-                        <li>
-                            <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
-                        </li>
-                    </ul>
-                </BrowserRouter>
-            </div>
-            <div id={"main"}>
-                <BrowserRouter>
-                    <Switch<Route>
-                        render={move |route: Route| {
-                            tracing::debug!("{}", route.clone());
-                            match route {
-                                Route::Home => html! { <Home /> },
-                                Route::Skills => html! { <Skills skills={skills.clone()} /> },
-                                Route::SkillSpecific { skill } => html! {
-                                    <ContentComponent
-                                        content={skills.get(&skill).map_or_else(|| Content::NotFound, Content::Skill)} />
-                                },
-                                Route::Achievements => html! { <Achievements achievements={achievements.clone()} /> },
-                                Route::AchievementSpecific { achievement } => html! {
-                                    <ContentComponent
-                                        content={achievements.get(&achievement).map_or_else(|| Content::NotFound, Content::Achievement)} />
-                                },
-                                Route::Creations => html! { <Creations creations={creations.clone()} /> },
-                                Route::CreationSpecific { creation } => html! {
-                                    <ContentComponent
-                                        content={creations.get(&creation).map_or_else(|| Content::NotFound, Content::Creation)} />
-                                },
-                                Route::Articles => html! { <Articles articles={articles.clone()} /> },
-                                Route::ArticleSpecific { article } => html! {
-                                    <ContentComponent
-                                        content={articles.get(&article).map_or_else(|| Content::NotFound, Content::Article)} />
-                                },
-                                Route::Contact => html! { <Contact /> },
-                                Route::NotFound => html! { <NotFound /> },
-                            }
-                        }}
-                    />
-                </BrowserRouter>
+            <div id="page-wrapper">
+                <div id={"nav"}>
+                    <BrowserRouter>
+                        <ul>
+                            <li>
+                                <Link<Route> to={Route::Home}>{ "Home" }</Link<Route>>
+                            </li>
+                            <li>
+                                <Link<Route> to={Route::Skills}>{ "Skills" }</Link<Route>>
+                            </li>
+                            <li>
+                                <Link<Route> to={Route::Creations}>{ "Creations" }</Link<Route>>
+                            </li>
+                            <li>
+                                <Link<Route> to={Route::Articles}>{ "Articles" }</Link<Route>>
+                            </li>
+                            <li>
+                                <Link<Route> to={Route::Contact}>{ "Contact" }</Link<Route>>
+                            </li>
+                        </ul>
+                    </BrowserRouter>
+                </div>
+
+                <div id={"main"}>
+                    <BrowserRouter>
+                        <Switch<Route>
+                            render={move |route: Route| {
+                                tracing::debug!("{}", route.clone());
+                                match route {
+                                    Route::Home => html! { <Home /> },
+                                    Route::Skills => html! { <Skills skills={skills.clone()} /> },
+                                    Route::SkillSpecific { skill } => html! {
+                                        <ContentComponent
+                                            content={skills.get(&skill).map_or_else(|| Content::NotFound, Content::Skill)} />
+                                    },
+                                    Route::Creations => html! { <Creations creations={creations.clone()} /> },
+                                    Route::CreationSpecific { creation } => html! {
+                                        <ContentComponent
+                                            content={creations.get(&creation).map_or_else(|| Content::NotFound, Content::Creation)} />
+                                    },
+                                    Route::Articles => html! { <Articles articles={articles.clone()} /> },
+                                    Route::ArticleSpecific { article } => html! {
+                                        <ContentComponent
+                                            content={articles.get(&article).map_or_else(|| Content::NotFound, Content::Article)} />
+                                    },
+                                    Route::Contact => html! { <Contact /> },
+                                    Route::NotFound => html! { <NotFound /> },
+                                }
+                            }}
+                        />
+                    </BrowserRouter>
+                </div>
             </div>
         </div>
     }
