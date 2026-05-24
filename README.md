@@ -1,11 +1,8 @@
 # Hello, world.
 
-This is my first fully completed, non-satic website. It's a portfolio/personal website.
+This is my first released, non-satic website. It's a portfolio/personal website.
 
-You can find the GitHub Pages release at [queenkirathepansexualpixie.github.io](https://queenkirathepansexualpixie.github.io/).
-
-> [!NOTE] Disclaimer:
-> The website is not currently working – I'm having some trouble deploying the trunk app with GitHub Workflows.
+You can find the GitHub Pages release at [kira-hudson.github.io](https://kira-hudson.github.io/).
 
 ## License and Copyright
 
